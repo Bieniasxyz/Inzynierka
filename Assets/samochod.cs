@@ -16,11 +16,11 @@ public class samochod : MonoBehaviour
     {
       if(Input.GetKey(KeyCode.W))
         {
-            rigidbody.AddRelativeForce(Vector3.forward);
+            transform.Translate(Vector3.forward * Time.deltaTime * 10);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rigidbody.AddRelativeForce(Vector3.back);
+            transform.Translate(Vector3.back * Time.deltaTime* 30);
         }
     }
 }
