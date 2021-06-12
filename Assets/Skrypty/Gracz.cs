@@ -14,10 +14,18 @@ public class Gracz : MonoBehaviour
     private float MaksimumZniszczen;
     private float AktualneZniszczenia;
     private float MnoznikZniszczen;
+    List<KeyValuePair<float, float>> trasa;
     
-    void Start()
+    float mnoznikLewo = 50f;
+    float mnoznikPrawo = 50f;
+    float mnoznikPrzod = 10f;
+    float mnoznikTyl = 6f;
+
+    public void Start()
     {
         PoczatkoweWartosciZmiennych();
+        trasa = new List<KeyValuePair<float, float>>();
+        //transform.position 
     }
     public float PodajPunktyZycia()
     {
@@ -35,21 +43,19 @@ public class Gracz : MonoBehaviour
     }
     void Update()
     {
-        
+        PoruszanieSie();
     }
 
     private void ZmniejszPunktyZycia()
     {
         if (PunktyZycia > 0)
         {
-            PunktyZycia--;
+            PunktyZycia -= LosujPunktyZniszczen(); ;
         }
         else
         {
             GraczZyje = false;
         }
-    
-     
     }
     private void ZapisProfilGracza(string nazwa)
     {
@@ -99,6 +105,61 @@ public class Gracz : MonoBehaviour
     }
     private float LosujPunktyZniszczen ()
     {
-        return UnityEngine.Random.Range(0.1f, 1f);
+        return UnityEngine.Random.Range(1f, 3f);
+    }
+    private void ZapiszTrase()
+    {
+        float x, y;
+        x = transform.position.x;
+        y = transform.position.y;
+        KeyValuePair<float, float> sprawdzenie = new KeyValuePair<float, float>();
+        sprawdzenie = new KeyValuePair<float, float>(x, y);
+        if (trasa.Count == 0)
+        {
+            trasa.Add(sprawdzenie);
+        }
+        else
+        {
+            if (!trasa[trasa.Count - 1].Equals(sprawdzenie))
+            {
+                trasa.Add(sprawdzenie);
+            }
+        }
+    }
+    private void WyswietlTrase()
+    {
+        foreach (var item in trasa)
+        {
+            Debug.Log("x to" + item.Key + " y to: " + item.Value);
+
+        }
+    }
+    void OnTriggerEnter(Collider enter)
+    {
+        ZmniejszPunktyZycia();
+    }
+    void PoruszanieSie()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(new Vector3(0,1,0) * Time.deltaTime * mnoznikPrzod);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(new Vector3(0, -1, 0) * Time.deltaTime * mnoznikTyl);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Rotate(new Vector3(1,0,0) * mnoznikLewo * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Rotate(new Vector3(-1, 0, 0) * mnoznikPrawo * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.T))
+        {
+            WyswietlTrase();
+        }
+        ZapiszTrase();
     }
 }

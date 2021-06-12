@@ -5,27 +5,20 @@ using UnityEngine.UI;
 
 public class LicznikZycia : MonoBehaviour
 {
-    public GameObject gracz;
-    public Gracz skrypt;
-    private Text wyswietlanaWartoscCzasu;
-    private float zmiennaTymczasowa;
-    private string minuty;
-    private string sekundy;
-
+    public GameObject odwolanie;
+    Gracz postac;
+    public Text WyswietlaczZycia;
     void Start()
     {
-        skrypt = gracz.GetComponent<Gracz>();
-        wyswietlanaWartoscCzasu = this.GetComponentInChildren<Text>();
+        postac = odwolanie.GetComponent<Gracz>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        zmiennaTymczasowa = skrypt.PodajPunktyZycia();
-        minuty = Mathf.Floor(zmiennaTymczasowa / 60).ToString("00");
-        sekundy = (zmiennaTymczasowa % 60).ToString("00");
-        //Debug.Log(sekundy);
-       // string tmp = 
-        wyswietlanaWartoscCzasu.text = string.Concat("Pozostało: ", minuty, ": ",sekundy);
+        WyswietlZycie(postac.PodajPunktyZycia().ToString());
+    }
+    private void WyswietlZycie(string wartosc)
+    {
+        WyswietlaczZycia.text = wartosc;
     }
 }

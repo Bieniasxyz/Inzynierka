@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ public class CzasGry : MonoBehaviour
     private float CzasPoziomu;
     private bool LicznikCzasuJestAktywny = true;
     public Text WyswietlaczCzasu;
+    float minuty, sekundy;
     void Start()
     {
         PoczatkoweWartosciZmiennych();
@@ -23,9 +25,9 @@ public class CzasGry : MonoBehaviour
         CzasRozgrywki = 0f;
         CzasPoziomu = 100f;
         PozostalyCzas = CzasPoziomu - CzasRozgrywki;
+        WyswietlaczCzasu = gameObject.GetComponentInChildren<Text>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (LicznikCzasuJestAktywny == true)
@@ -33,7 +35,8 @@ public class CzasGry : MonoBehaviour
             
             if (PozostalyCzas == 0 || PozostalyCzas < 0)
             {
-                //Smierc();
+                LicznikCzasuJestAktywny = false;
+                Smierc();  
             }
             else
             {
@@ -41,16 +44,23 @@ public class CzasGry : MonoBehaviour
             }
         }
     }
+
+    private void Smierc()
+    {
+        throw new NotImplementedException();
+    }
+
     private void LicznikCzasu()
     {
         CzasRozgrywki += Time.deltaTime;
         PozostalyCzas = CzasPoziomu - CzasRozgrywki;
-        float Minuty = Mathf.FloorToInt(PozostalyCzas / 60);
-        float Sekundy = Mathf.FloorToInt(PozostalyCzas % 60);
-        WyswietlaczCzasu = gameObject.GetComponent<Text>();
-        
-        string tekst = string.Format("{0:00}:{1:00}", Minuty, Sekundy);
+        minuty = Mathf.FloorToInt(PozostalyCzas / 60);
+        sekundy = Mathf.FloorToInt(PozostalyCzas % 60);
+        WyswietlCzas();
+    }
+    private void WyswietlCzas()
+    {
+        string tekst = string.Format("{0:00}:{1:00}", minuty, sekundy);
         WyswietlaczCzasu.text = tekst;
-        Debug.Log(tekst);
     }
 }
