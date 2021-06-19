@@ -8,7 +8,7 @@ public class MenuGry : MonoBehaviour
     private bool GraJestAktywna = true;
     private void Start()
     {
-        //MenuGryJestWylaczone();
+        MenuGryJestWylaczone();
     }
     void Update()
     {

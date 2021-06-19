@@ -7,13 +7,13 @@ using UnityEngine.UI;
 public class CzasGry : MonoBehaviour
 {
     [SerializeField]
-    private float CzasRozgrywki;
+    public float CzasRozgrywki;
     [SerializeField]
     private float PozostalyCzas;
     [SerializeField]
     private float CzasPoziomu;
     private bool LicznikCzasuJestAktywny = true;
-    public Text WyswietlaczCzasu;
+    public Text WyswietlaczCzasu, LicznikZniszczen;
     float minuty, sekundy;
     void Start()
     {
@@ -36,7 +36,6 @@ public class CzasGry : MonoBehaviour
             if (PozostalyCzas == 0 || PozostalyCzas < 0)
             {
                 LicznikCzasuJestAktywny = false;
-                Smierc();  
             }
             else
             {
@@ -44,12 +43,6 @@ public class CzasGry : MonoBehaviour
             }
         }
     }
-
-    private void Smierc()
-    {
-        throw new NotImplementedException();
-    }
-
     private void LicznikCzasu()
     {
         CzasRozgrywki += Time.deltaTime;

@@ -6,9 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Sceny/MenuGlowne.unity
+    path: Assets/Sceny/Menu.unity
+    guid: c19aaf804d92a7548bbe4e06303c7753
+  - enabled: 1
+    path: Assets/Sceny/TablicaWynikow.unity
     guid: 76a77098e52e2774ab7f76b858a89f5e
   - enabled: 1
     path: Assets/Sceny/Poziom1.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Sceny/Smierc.unity
+    guid: 517ec4fea88d9a3438295a6039372f71
+  - enabled: 1
+    path: Assets/Sceny/Autor.unity
+    guid: 944c9cb33d1715f4dae2351818313398
   m_configObjects: {}

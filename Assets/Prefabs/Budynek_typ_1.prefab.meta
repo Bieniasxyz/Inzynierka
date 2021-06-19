@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Prefabs/Budynek_typ_1.prefab.meta
 guid: 1fc56b8c105f3a84eab7fe6017ac910c
+=======
+guid: 6267912a027ee1e4187c596a6bc97079
+>>>>>>> ee9b52c8bd765f9ba9e570d34cad61b939c5b62e:Assets/Prefabs/Obramowanie.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

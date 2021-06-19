@@ -7,7 +7,7 @@ public class MiernikOdleglosci : MonoBehaviour
 {
     
     public GameObject Gracz, Cel;
-    public GameObject pozycjegry;
+    //public GameObject pozycjegry;
     public Text WyswietlaczOdleglosci;
     public float Odleglosc;
     public StartStop skrypt;
@@ -16,9 +16,7 @@ public class MiernikOdleglosci : MonoBehaviour
     {
         WyswietlaczOdleglosci = this.GetComponent<Text>();
         skrypt = gameObject.GetComponent<StartStop>();
-        //Gracz = skrypt.Poczatek.transform.position;
-
-        //Cel = skrypt.Cel;
+        
     }
   
     void Update()

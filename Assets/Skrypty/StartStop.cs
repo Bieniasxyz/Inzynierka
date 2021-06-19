@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class StartStop : MonoBehaviour
 {
-    private GameObject[] listaStartowa;
-    private GameObject[] listaKoncowa;
+    public GameObject[] listaStartowa;
+    public GameObject[] listaKoncowa;
     public GameObject Poczatek, Cel;
+
     private List<string> typZdarzenia;
     private List<string> pozarZdarzenia;
     private List<string> wypadekZdarzenia;
+
+    public bool[] celOsiagniety;
     public string typAkcji, typSzczegolowy;
 
     void Start()
     {
         listaStartowa = GameObject.FindGameObjectsWithTag("Poczatek");
         listaKoncowa = GameObject.FindGameObjectsWithTag("Koniec");
+
         Poczatek = Losuj(listaStartowa);
         SprawdzPunktPoczatekKoniec();
         this.transform.position = Poczatek.transform.position;
@@ -24,6 +28,11 @@ public class StartStop : MonoBehaviour
         wypadekZdarzenia = new List<string>();
         DodajTypyZdarzenia();
         LosujTypZdarzenia();
+        celOsiagniety = new bool[6];
+        for (int i = 0; i < celOsiagniety.Length; i++)
+        {
+            celOsiagniety[i] = false;
+        }
     }
 
     private void SprawdzPunktPoczatekKoniec()
@@ -32,6 +41,7 @@ public class StartStop : MonoBehaviour
         {
           Cel = Losuj(listaKoncowa);
         } while (Poczatek == Cel);
+        Cel.tag = "Cel";
     }
 
     private GameObject Losuj(GameObject[] listaObiektow)
@@ -50,7 +60,7 @@ public class StartStop : MonoBehaviour
         pozarZdarzenia.Add("Pozar_Gaz");
         pozarZdarzenia.Add("Pozar_Prad");
         wypadekZdarzenia.Add("Zabezpieczenie");
-        wypadekZdarzenia.Add("ZabezpieczenieMiejsca");
+        wypadekZdarzenia.Add("Ewakuacja");
     }
     private void LosujTypZdarzenia()
     {
@@ -66,6 +76,23 @@ public class StartStop : MonoBehaviour
         {
             tmp = UnityEngine.Random.Range(0, wypadekZdarzenia.Count);
             typSzczegolowy = wypadekZdarzenia[tmp];
+        }
+    }
+    private void ZastosujTypAkcji()
+    {
+        if (typAkcji == "Pozar")
+        {
+            switch (typSzczegolowy)
+            {
+                case "Ewakuacja":
+                    if (celOsiagniety[0] == true && celOsiagniety[1] == false)
+                    {
+                        Cel.transform.position = GameObject.Find("Ewakuacja").transform.position;
+                    }                
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

@@ -6,40 +6,20 @@ using UnityEngine.UI;
 
 public class ZarzadzanieMenu : MonoBehaviour
 {
-    public GameObject NazwaGracza;
+    //public GameObject NazwaGracza;
     public GameObject MenuWGrze;
-    public Text WyswietlczNazwyGracza;
-    private bool GraJestAktywna = true;
-    private void Update()
+    //public Text WyswietlczNazwyGracza;
+    private bool GraJestAktywna;
+    private void Start()
+    {
+        GraJestAktywna = true;
+    }
+    void Update()
     {
         if (Input.GetKey(KeyCode.Escape))
         {
             MenuGryJestAktywne();
         }
-    }
-    public void WyjdzZGry()
-    {
-        Application.Quit();
-    }
-    public void LadujScene(int numer)
-    {
-        SceneManager.LoadScene(numer);
-    }
-    public void RozpocznijGre()
-    {
-        LadujScene(1);
-    }
-    public void OdczytNazwyGracza()
-    {
-        string NazwaGracza = PlayerPrefs.GetString("NazwaGracza");
-        WyswietlczNazwyGracza.GetComponent<Text>().text = NazwaGracza;
-
-    }
-    public void ZapiszNazweGracza()
-    {
-        string nazwa = NazwaGracza.GetComponent<Text>().text;
-        PlayerPrefs.SetString("NazwaGracza", nazwa);
-        PlayerPrefs.Save();
     }
     private void WpiszNazweGraczaDoPola()
     {
@@ -47,13 +27,13 @@ public class ZarzadzanieMenu : MonoBehaviour
         text = gameObject.GetComponentInChildren<InputField>();
         
     }
-    void MenuGryJestAktywne()
+    public void MenuGryJestAktywne()
     {
         MenuWGrze.SetActive(true);
         GraJestAktywna = false;
         Time.timeScale = 0f;
     }
-    void MenuGryJestWylaczone()
+    public void MenuGryJestWylaczone()
     {
         MenuWGrze.SetActive(false);
         GraJestAktywna = true;

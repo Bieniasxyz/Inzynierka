@@ -2,18 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Gracz : MonoBehaviour
 {
     [SerializeField]
-    private float PunktyZycia;
-    [SerializeField]
-    private float MnoznikPoziomu;
+    private float PunktyZycia, PunktyZniszczenBudynkow;
+    private float LimitZniszczen;
+
     private bool GraczZyje;
+
     private float MaksimumZniszczen;
     private float AktualneZniszczenia;
-    private float MnoznikZniszczen;
+
     List<KeyValuePair<float, float>> trasa;
     
     float mnoznikLewo = 50f;
@@ -21,11 +21,18 @@ public class Gracz : MonoBehaviour
     float mnoznikPrzod = 10f;
     float mnoznikTyl = 6f;
 
+    float Wynik = 0;
+
+    ZarzadzanieScenami sceny;
+
+    public GameObject czasGry;
+    CzasGry czasomierz;
+
     public void Start()
     {
         PoczatkoweWartosciZmiennych();
         trasa = new List<KeyValuePair<float, float>>();
-        //transform.position 
+        czasomierz = czasGry.GetComponent<CzasGry>();
     }
     public float PodajPunktyZycia()
     {
@@ -35,42 +42,65 @@ public class Gracz : MonoBehaviour
     private void PoczatkoweWartosciZmiennych()
     {
         PunktyZycia = 100f;
-        MnoznikPoziomu = 1f;
         GraczZyje = true;
         MaksimumZniszczen = 100f;
         AktualneZniszczenia = 0f;
-        MnoznikZniszczen = 1f;
+        LimitZniszczen = UnityEngine.Random.Range(0.1f, 4f) * 100;
     }
     void Update()
     {
         PoruszanieSie();
+        CzyNastapilaSmierc();
+        ObliczWynikGracza();
+        Debug.Log(Wynik);
     }
 
+    private void CzyNastapilaSmierc()
+    {
+        if(GraczZyje == true)
+        {
+            if (PunktyZycia == 0 || PunktyZycia < 0)
+            {
+                GraczZyje = false;
+            }
+            if (PunktyZniszczenBudynkow >= LimitZniszczen)
+            {
+                GraczZyje = false;
+            }
+        }
+        else
+        {
+            Smierc();
+        }
+    }
+    private void ObliczWynikGracza()
+    {
+        float zniszczenia;
+        
+
+        zniszczenia = (float)((0.75 * AktualneZniszczenia) + (0.25 * PunktyZniszczenBudynkow));
+        Wynik = (float)((0.5 * czasomierz.CzasRozgrywki) * 100 - (0.5 * zniszczenia));
+    }
     private void ZmniejszPunktyZycia()
     {
         if (PunktyZycia > 0)
         {
-            PunktyZycia -= LosujPunktyZniszczen(); ;
+            PunktyZycia -= LosujPunktyZniszczen();
+            
         }
         else
         {
             GraczZyje = false;
         }
     }
-    private void ZapisProfilGracza(string nazwa)
-    {
-        PlayerPrefs.SetString("NazwaGracza", nazwa);
-        PlayerPrefs.Save();
-    }
-    private string OdczytDanychGracza()
-    {
-        string NazwaGracza = PlayerPrefs.GetString("NazwaGracza");
-        return NazwaGracza;
-    }
+
     private void Smierc()
     {
         GraczZyje = false;
-        throw new NotImplementedException();
+        sceny = gameObject.GetComponentInParent<ZarzadzanieScenami>();
+        Debug.Log(sceny);
+        sceny.Smierc();
+   
     }
     private void ZwiekszPunktyZniszczen(float punkty)
     {
@@ -83,29 +113,9 @@ public class Gracz : MonoBehaviour
             AktualneZniszczenia -= punkty;
         }
     }
-    private float IlePunktowZniszczen(byte TypZniszczen)
-    {
-        switch (TypZniszczen)
-        {
-            case 1: //Pojazdy
-                MnoznikZniszczen = 2f;
-                break;
-            case 2: //Budynki
-                MnoznikZniszczen = 3f;
-                break;
-            case 3: //Osoby
-                MnoznikZniszczen = 10f;
-                break;
-            default:
-                MnoznikZniszczen = 1f;
-                break;
-        }
-
-        return (LosujPunktyZniszczen() * MnoznikZniszczen);
-    }
     private float LosujPunktyZniszczen ()
     {
-        return UnityEngine.Random.Range(1f, 3f);
+        return UnityEngine.Random.Range(10f, 21f);
     }
     private void ZapiszTrase()
     {
@@ -131,13 +141,28 @@ public class Gracz : MonoBehaviour
         foreach (var item in trasa)
         {
             Debug.Log("x to" + item.Key + " y to: " + item.Value);
+            
 
         }
     }
     void OnTriggerEnter(Collider enter)
     {
-        ZmniejszPunktyZycia();
+        if (enter.tag == "Cel")
+        {
+            
+        }
+        else
+        {
+            ZmniejszPunktyZycia();
+            PowiekszPunktyZniszczen();
+        }
+        
     }
+        private void PowiekszPunktyZniszczen()
+    {
+        PunktyZniszczenBudynkow += UnityEngine.Random.Range(0f, 3f);
+    }
+
     void PoruszanieSie()
     {
         if (Input.GetKey(KeyCode.W))
@@ -161,5 +186,9 @@ public class Gracz : MonoBehaviour
             WyswietlTrase();
         }
         ZapiszTrase();
+    }
+    public float PodajAktualneZniszczenia()
+    {
+        return AktualneZniszczenia;
     }
 }
