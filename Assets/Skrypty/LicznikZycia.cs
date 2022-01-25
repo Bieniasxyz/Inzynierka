@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,10 +14,12 @@ public class LicznikZycia : MonoBehaviour
 
     void Update()
     {
-        WyswietlZycie(postac.PodajPunktyZycia().ToString());
+        WyswietlZycie(postac.PodajPunktyZycia());
     }
-    private void WyswietlZycie(string wartosc)
+    private void WyswietlZycie(float wartosc)
     {
-        WyswietlaczZycia.text = wartosc;
+        decimal tmp = (decimal)wartosc;
+        tmp = Math.Round(tmp, 2);
+        WyswietlaczZycia.text = tmp.ToString();
     }
 }

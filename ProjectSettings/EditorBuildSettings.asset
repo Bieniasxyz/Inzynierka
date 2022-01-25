@@ -18,6 +18,15 @@ EditorBuildSettings:
     path: Assets/Sceny/Smierc.unity
     guid: 517ec4fea88d9a3438295a6039372f71
   - enabled: 1
-    path: Assets/Sceny/Autor.unity
+    path: Assets/Sceny/Pomoc.unity
     guid: 944c9cb33d1715f4dae2351818313398
+  - enabled: 1
+    path: Assets/Sceny/Autor.unity
+    guid: c8e021db0594c8d4aaf8300486ee0105
+  - enabled: 1
+    path: Assets/Sceny/Poziom2.unity
+    guid: 059d939f71506dc4380ea2659eec6e67
+  - enabled: 1
+    path: Assets/Sceny/Poziom3.unity
+    guid: b6df743255daa1c44916e821b58548f0
   m_configObjects: {}

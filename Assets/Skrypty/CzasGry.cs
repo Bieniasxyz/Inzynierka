@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class CzasGry : MonoBehaviour
@@ -9,7 +6,7 @@ public class CzasGry : MonoBehaviour
     [SerializeField]
     public float CzasRozgrywki;
     [SerializeField]
-    private float PozostalyCzas;
+    public float PozostalyCzas;
     [SerializeField]
     private float CzasPoziomu;
     private bool LicznikCzasuJestAktywny = true;
@@ -27,7 +24,6 @@ public class CzasGry : MonoBehaviour
         PozostalyCzas = CzasPoziomu - CzasRozgrywki;
         WyswietlaczCzasu = gameObject.GetComponentInChildren<Text>();
     }
-
     void Update()
     {
         if (LicznikCzasuJestAktywny == true)

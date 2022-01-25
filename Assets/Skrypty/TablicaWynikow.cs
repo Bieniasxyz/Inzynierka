@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -7,19 +6,80 @@ using System;
 
 public class TablicaWynikow : MonoBehaviour
 {
-    public float[] wyniki;
-    public string[] daty;
-    
+    private float[] wyniki;
+    private string[] daty;
+    public Text[] WynikText, DatyText;
+    void Start()
+    {
+        wyniki = new float[10];
+        daty = new string[10];
+        OdczytajWyniki();
+        if(this.tag != "WynikGry")
+        {
+            WyswietlWyniki();
+        }
+    }
     void OdczytajWyniki()
+    {
+        SortedList<float, string> lista = new SortedList<float, string>();
+        float tmp1;
+        string tmp2;
+        for (int i = 0; i < 10; i++)
+        {
+            tmp1 = PlayerPrefs.GetFloat("Wynik_" + i);
+            tmp2 = PlayerPrefs.GetString("Data_" + i);
+
+            if (i > 0)
+            {
+                if (tmp1 == wyniki[i-1])
+                {
+                    tmp1 -= i;
+                }
+            }
+            lista.Add(tmp1, tmp2);   
+        }
+        int j = 0;
+        var listaDoSortowania = from wybor in lista orderby wybor.Key descending select wybor;
+        foreach (var item in listaDoSortowania)
+        {
+            wyniki[j] = item.Key;
+            daty[j] = item.Value;
+            j++;
+        }
+        ZapiszWynikiPosortowane();
+    }
+    void ZapiszWynikiPosortowane()
     {
         for (int i = 0; i < 10; i++)
         {
-           wyniki[i] = PlayerPrefs.GetFloat("Wynik_" + i);
-           daty[i] = PlayerPrefs.GetString("Data_" + i); 
+            PlayerPrefs.SetFloat("Wynik_" + i, wyniki[i]);
+            PlayerPrefs.SetString("Data_" + i, daty[i]);
         }
-        
     }
-    void ZapiszWyniki(int indeks, float wynik)
+    void WyswietlWyniki()
+    {
+        for (int i = 0; i < 10; i++)
+        { 
+            if (wyniki[i] == default)
+            {
+                WynikText[i].text = "Brak wyniku";
+            }
+            else
+            {
+                WynikText[i].text = wyniki[i].ToString();
+            }
+
+            if (daty[i] == "Data" || daty[i] =="")
+            {
+                DatyText[i].text = "Brak wyniku";
+            }
+            else
+            {
+                DatyText[i].text = daty[i].ToString();
+            }  
+        }  
+    }
+    void ZapiszWynik(int indeks, float wynik)
     {
 
         PlayerPrefs.SetFloat("Wynik_" + indeks, wynik);
@@ -31,27 +91,15 @@ public class TablicaWynikow : MonoBehaviour
         PlayerPrefs.SetString("Data_" + indeks, tmp);
 
     }
-    void SprawdzCzyWiekszyNizNaLiscie(float wynik)
+    public void SprawdzWynik(float wynik)
     {
-        float minimum = float.MaxValue;
-        int numerindeksu = 0;
-        for (int i = 0; i < 10; i++)
+        
+        if (wynik > wyniki[9])
         {
-            if (wyniki[i] < minimum)
-            {
-                minimum = wyniki[i];
-                numerindeksu = i;
-            }
+            PlayerPrefs.SetFloat("Wynik_9", wynik);
+            DateTime biezacadata = DateTime.Now;
+            string tmp = String.Concat(biezacadata.Year, "-", biezacadata.Month, "-", biezacadata.Day, " ", biezacadata.Hour, ":", biezacadata.Minute);
+            PlayerPrefs.SetString("Data_9", tmp);
         }
-        if (wynik > minimum)
-        {
-            wyniki[numerindeksu] = wynik;
-        }
-    }
-    private void Start()
-    {
-        wyniki = new float[10];
-        daty = new string[10];
-        OdczytajWyniki();
     }
 }

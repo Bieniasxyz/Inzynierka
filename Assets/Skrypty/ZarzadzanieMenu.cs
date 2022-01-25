@@ -1,14 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class ZarzadzanieMenu : MonoBehaviour
 {
-    //public GameObject NazwaGracza;
     public GameObject MenuWGrze;
-    //public Text WyswietlczNazwyGracza;
     private bool GraJestAktywna;
     private void Start()
     {
@@ -20,12 +14,6 @@ public class ZarzadzanieMenu : MonoBehaviour
         {
             MenuGryJestAktywne();
         }
-    }
-    private void WpiszNazweGraczaDoPola()
-    {
-        InputField text;
-        text = gameObject.GetComponentInChildren<InputField>();
-        
     }
     public void MenuGryJestAktywne()
     {
@@ -39,5 +27,4 @@ public class ZarzadzanieMenu : MonoBehaviour
         GraJestAktywna = true;
         Time.timeScale = 1f;
     }
-
 }

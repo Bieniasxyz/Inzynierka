@@ -3,7 +3,16 @@ guid: c1bd4b044e2cbe048bcb79b9e7127b8d
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - gracz: {fileID: 919132149155446097, guid: bcc827f14d4c4644a815a9ed89ce2d77, type: 3}
+  - MenuWprowadzenie: {instanceID: 0}
+  - KomunikatBleduWyboruSprzetu: {instanceID: 0}
+  - WyborSprzetu: {instanceID: 0}
+  - GasnicaProszkowa: {instanceID: 0}
+  - KocGasniczy: {instanceID: 0}
+  - Woda: {instanceID: 0}
+  - GasnicaPianowa: {instanceID: 0}
+  - KomunikatOBledieWyboru: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -8,6 +8,7 @@ TagManager:
   - Poczatek
   - Koniec
   - Cel
+  - WynikGry
   layers:
   - Default
   - TransparentFX

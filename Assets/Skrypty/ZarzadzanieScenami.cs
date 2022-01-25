@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class ZarzadzanieScenami : MonoBehaviour
 {
@@ -16,7 +13,10 @@ public class ZarzadzanieScenami : MonoBehaviour
     }
     public void RozpocznijGre()
     {
-        LadujScene(2);
+        System.Random rand = new System.Random();
+        int[] tablica = new int[3] { 2, 6, 7 };
+        int tmp = rand.Next(1, tablica.Length);
+        LadujScene(tablica[tmp]);
     }
     public void Smierc ()
     {
@@ -24,6 +24,6 @@ public class ZarzadzanieScenami : MonoBehaviour
     }
     public void Autor()
     {
-        LadujScene(4);
+        LadujScene(5);
     }
 }

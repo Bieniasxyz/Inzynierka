@@ -1,16 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Strzalka : MonoBehaviour
 {
     private Image strzalka;
     public Transform gracz;
-    public Transform cel;
+    private Transform cel;
+    public GameObject pojazd;
+    private StartStop skrypt;
     void Start()
     {
         strzalka = GetComponent<Image>();
+        skrypt = pojazd.GetComponent<StartStop>();
+        cel = skrypt.BazaKoncowa.transform;
     }
     void Update()
     {

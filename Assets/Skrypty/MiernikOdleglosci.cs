@@ -1,27 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MiernikOdleglosci : MonoBehaviour
 {
-    
-    public GameObject Gracz, Cel;
-    //public GameObject pozycjegry;
+    public GameObject Gracz;
     public Text WyswietlaczOdleglosci;
     public float Odleglosc;
-    public StartStop skrypt;
-
+    private StartStop skrypt;
     void Start()
     {
         WyswietlaczOdleglosci = this.GetComponent<Text>();
-        skrypt = gameObject.GetComponent<StartStop>();
+        skrypt = Gracz.GetComponent<StartStop>();
         
     }
-  
     void Update()
     {
-        Odleglosc = Vector3.Distance(Gracz.transform.position, Cel.transform.position);
+        Odleglosc = Vector3.Distance(Gracz.transform.position, skrypt.Cel.transform.position);
         WyswietlaczOdleglosci.text = Odleglosc.ToString("F2");
     }
 }
